@@ -6,7 +6,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'navbar-c',
+  selector: 'app-navbar-c',
   imports: [MatToolbarModule, RouterModule, MatButtonModule, MatIconModule],
   templateUrl: './navbar-c.component.html',
   styleUrl: './navbar-c.component.scss'
