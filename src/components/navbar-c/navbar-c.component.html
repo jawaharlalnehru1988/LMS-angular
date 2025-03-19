@@ -1,0 +1,10 @@
+<mat-toolbar>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Library Management System</span>
+    <span class="example-spacer"></span>
+    @for (item of navTitle; track $index) {
+        <button  class="custom-button" [routerLink]="item.route"  routerLinkActive="active">{{item.title}}</button>
+    }
+  </mat-toolbar>
