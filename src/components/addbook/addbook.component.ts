@@ -15,7 +15,7 @@ import { BookService } from '../../allservices/book.service';
 export class AddbookComponent {
   readonly dialogRef = inject(MatDialogRef<AddbookComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
-  readonly animal = model(this.data.animal);
+  readonly animal = model();
 
   constructor(private fb: FormBuilder, private bookService: BookService){
 

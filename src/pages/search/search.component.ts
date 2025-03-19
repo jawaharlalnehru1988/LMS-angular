@@ -52,9 +52,9 @@ export class SearchComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
+      this.fetchBookDetails();
 
       if (result !== undefined) {
-        this.fetchBookDetails();
       }
     });
   }
