@@ -48,8 +48,6 @@ export class RegisterComponent implements OnInit {
   }
   ngOnInit():void{
     if (!this.isRegister) {
-      this.authForm.removeControl('email');
-      this.authForm.removeControl('phone');
       this.bookService.getUserDetails().subscribe({
         next:(res: UserWithRole[])=>{
           this.usersDetails = res;

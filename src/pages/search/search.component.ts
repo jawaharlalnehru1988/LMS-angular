@@ -29,10 +29,7 @@ export class SearchComponent implements OnInit {
     'title',
     'author',
     'isbn',
-    'status',
-    'borrowedId',
-    'borrowedDate',
-    'returnDueDate',
+    'count'
   ];
   dataSource!: MatTableDataSource<UserData>;
   readonly dialog = inject(MatDialog);

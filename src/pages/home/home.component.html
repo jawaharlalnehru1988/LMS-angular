@@ -1,15 +1,31 @@
-
-
+<mat-form-field>
+  <mat-label>Search Books by Author name, book name, category</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Rama" #input>
+</mat-form-field>
   <main class="container">
     <nav class="left-half">
         <div class="button-list">
-            <!-- @for (item of navTitle; track $index) {
-                <button class="custom-button">{{item}}</button>
-            } -->
           </div>
     </nav>
-    <div class="right-half">
-        <p>Child Component</p>
-    </div>
+    <article class="right-half">
+      <div class="card-container">
+        <mat-card class="example-card" appearance="outlined" *ngFor="let item of filteredBookItems">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image': 'url(' + item.image + ')'}"></div>
+            <mat-card-title>{{ item.title }}</mat-card-title>
+            <mat-card-subtitle>{{ item.author }}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image [src]="item.image" [alt]="item.title">
+          <mat-card-content>
+            <p>{{ item.isbn }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+      
+    </article>
   </main>
   

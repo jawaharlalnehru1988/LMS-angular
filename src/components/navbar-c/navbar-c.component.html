@@ -1,10 +1,26 @@
 <mat-toolbar>
+  <div>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>Library Management System</span>
-    <span class="example-spacer"></span>
-    @for (item of navTitle; track $index) {
-        <button  class="custom-button" [routerLink]="item.route"  routerLinkActive="active">{{item.title}}</button>
-    }
+    <span>LMS</span>
+
+  </div>
+  <div>
+    <div>
+      @for (item of navTitle; track $index) {
+        <button mat-button [routerLink]="item.route"  routerLinkActive="active">{{item.title}}</button>
+      }
+    </div>
+
+  </div>
+  <div>
+    <button mat-raised-button>
+      <div>{{userData.username}} - {{userData.role}}</div>
+    </button>
+    <button mat-flat-button (click)="logOut()">Log Out</button>
+
+  </div>
+
+    <!-- <span>{{userData.username}}<span> -->
   </mat-toolbar>

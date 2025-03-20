@@ -8,11 +8,9 @@ export interface Navigations{
     id: string
     title: string
     author: string
-    isbn: string
-    status: "AVAILABLE" | "BORROWED" | "OVERDUE";
-    borrowedId?: string
-    borrowedDate?: string
-    returnDueDate?: string
+    isbn: string;
+    count: number;
+    image:string;
   }
 
   export interface RegisterUser {
