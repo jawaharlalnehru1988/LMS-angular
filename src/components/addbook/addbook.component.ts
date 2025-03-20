@@ -1,14 +1,16 @@
 import { Component, inject, model, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { BookDetails } from '../../shared/interfaces';
 import { BookService } from '../../allservices/book.service';
+import { NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-addbook',
-  imports: [MatDialogModule, ReactiveFormsModule, FormsModule, MatInputModule, MatFormFieldModule],
+  imports: [MatDialogModule, NgIf, ReactiveFormsModule, FormsModule, MatInputModule, MatFormFieldModule, MatButtonModule],
   templateUrl: './addbook.component.html',
   styleUrl: './addbook.component.scss'
 })
@@ -24,9 +26,10 @@ export class AddbookComponent implements OnInit {
 
 ngOnInit():void{
   this.bookDetailGroup = this.fb.group({
-    title: [''],
-    author: [''],
-    isbn:['']
+    title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+    author: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+    isbn:['', [Validators.required]],
+    count:[0, Validators.min(0)]
 })
 }
 submitData(newBookData: BookDetails) {

@@ -50,7 +50,7 @@
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Phone Number</mat-label>
-                    <input matInput type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="10" formControlName="phone"/>
+                    <input matInput type="number" inputmode="numeric" pattern="[0-9]*" maxlength="10" formControlName="phone"/>
                     <mat-error *ngIf="authForm.get('phone')?.errors as errors">
                     <ng-container *ngIf="errors?.['pattern']">Invalid phone number format</ng-container>
                       </mat-error>

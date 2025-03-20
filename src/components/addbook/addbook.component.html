@@ -6,19 +6,41 @@
       <div>
           <mat-form-field>
     <mat-label>Book Title</mat-label>
-    <input matInput formControlName="title" />
+    <input matInput formControlName="title" maxlength="50" required />
+    <mat-error *ngIf="bookDetailGroup.get('title')?.errors as errors">
+        <ng-container *ngIf="errors?.['required']">Title is required</ng-container>
+        <ng-container *ngIf="errors?.['minlength']">Title must be at least 3 characters long</ng-container>
+        <ng-container *ngIf="errors?.['maxLength']">Title must be at most 50 characters long</ng-container>
+    </mat-error>
   </mat-form-field>
   </div>
   <div>
   <mat-form-field>
     <mat-label>Author</mat-label>
-    <input matInput formControlName="author"  />
+    <input matInput formControlName="author" required maxlength="50" />
+    <mat-error *ngIf="bookDetailGroup.get('author')?.errors as errors">
+        <ng-container *ngIf="errors?.['required']">Auther Name is required</ng-container>
+        <ng-container *ngIf="errors?.['minlength']">Auther Name must be at least 3 characters long</ng-container>
+        <ng-container *ngIf="errors?.['maxLength']">Auther Name must be at most 50 characters long</ng-container>
+    </mat-error>
 </mat-form-field>
 </div>
 <div>
     <mat-form-field>
         <mat-label>ISBN number</mat-label>
-        <input matInput formControlName="isbn" />
+        <input matInput inputmode="numeric" pattern="[0-9]*" formControlName="isbn" maxlength="15" />
+        <mat-error *ngIf="bookDetailGroup.get('isbn')?.errors as errors">
+            <ng-container *ngIf="errors?.['pattern']">Invalid ISBN number format</ng-container>
+              </mat-error>
+    </mat-form-field>
+</div>
+<div>
+    <mat-form-field>
+        <mat-label>No.Of.Copies</mat-label>
+        <input matInput inputmode="numeric" pattern="[0-9]*" maxlength="4" formControlName="count" />
+        <mat-error *ngIf="bookDetailGroup.get('count')?.errors as errors">
+            <ng-container *ngIf="errors?.['pattern']">Invalid number format</ng-container>
+              </mat-error>
     </mat-form-field>
 </div>
 </form>

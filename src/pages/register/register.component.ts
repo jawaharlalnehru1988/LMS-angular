@@ -87,6 +87,7 @@ export class RegisterComponent implements OnInit {
     if (matchedUser) {
       console.log("User found:", matchedUser);
       this.router.navigate(["/home"]);
+      sessionStorage.setItem("user", JSON.stringify(matchedUser));
       this.bookService.userDataSignal.set(matchedUser);
 
     } else {

@@ -20,7 +20,6 @@ export class NavbarCComponent {
     {title: "Return", route: "/return"}, 
     {title: "History", route: "/history"}
     ];
-  // userData: any;
   userData: UserWithRole = {
     "role": "Librarian",
     "username": "",
@@ -32,7 +31,17 @@ export class NavbarCComponent {
 
     ngOnInit():void{
       this.userData= this.bookService.userDataSignal();
-      console.log('userData :', this.userData);
+      
+      if (!this.userData.username) {
+        const userFromSessionString = sessionStorage.getItem("user");
+        
+        if (userFromSessionString){
+          const userFromSession = JSON.parse(userFromSessionString);
+          this.userData = userFromSession;
+        }
+      } else {
+        console.log("No user data found in session storage.");
+      }
     }
     logOut():void{
       this.router.navigate(["/login"]);
