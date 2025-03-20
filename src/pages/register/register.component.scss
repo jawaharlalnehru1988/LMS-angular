@@ -30,10 +30,10 @@ form{
 }
 
 .wrapper{
-    
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 10px 10px rgba(0,0,0,0.2);
 }
 
 .login-indicator{
@@ -44,12 +44,16 @@ form{
 article{
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    font-weight: 800;
 }
 .golden-text {
     font-size: 3em;
     font-weight: bold;
     background: linear-gradient(45deg, #FFD700, #FF8C00);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     position: relative;
     text-align: center;

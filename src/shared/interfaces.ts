@@ -21,4 +21,8 @@ export interface Navigations{
     email: string
     phone: string
   }
+
+  export interface UserWithRole extends RegisterUser{
+    role: "Librarian" | "Member";
+  }
   export type BookDetails = Pick<UserData, "title" | "author" | "isbn">;

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BookDetails, RegisterUser, UserData } from '../shared/interfaces';
+import { BookDetails, RegisterUser, UserData, UserWithRole } from '../shared/interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -21,4 +21,9 @@ export class BookService {
   addNewUser(user:RegisterUser){
     return this.http.post<RegisterUser>('http://localhost:3000/members', user)
   }
+
+  getUserDetails(){
+    return this.http.get<UserWithRole>('http://localhost:3000/members')
+  }
+
 }

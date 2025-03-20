@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BookService } from '../../allservices/book.service';
-import { RegisterUser } from '../../shared/interfaces';
+import { RegisterUser, UserWithRole } from '../../shared/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
 
@@ -58,8 +58,7 @@ export class RegisterComponent implements OnInit {
   }
 
   submit(){
-    if (this.authForm.valid) {
-      console.log(this.authForm.value);
+    if (this.authForm.valid && this.isRegister) {
       this.bookService.addNewUser(this.authForm.value).subscribe({
         next:(res: RegisterUser)=>{
           console.log(res);
@@ -70,6 +69,12 @@ export class RegisterComponent implements OnInit {
         }
       });
       
+    } else if(this.authForm.valid) {
+      this.bookService.getUserDetails().subscribe({
+        next:(res: UserWithRole)=>{
+          console.log(res);
+        }
+      })
     }
   }
 
