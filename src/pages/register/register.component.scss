@@ -1,0 +1,83 @@
+@keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  main {
+    background: linear-gradient(270deg, #ff6f61, #6b5b95, #88b04b, #ff9a9e);
+    background-size: 800% 800%;
+    animation: gradient 15s ease infinite;
+    min-height: 100vh;
+  }
+
+mat-form-field{
+    width: 100%;
+}
+
+form{
+    border: 1px solid black;
+    padding: 1rem;
+    width: 40vw;
+    background-color: aliceblue;
+    border-radius: 1em;
+}
+
+.wrapper{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-indicator{
+    font-size:small;
+    color: blue;
+    cursor: pointer;
+}
+article{
+    display: flex;
+    justify-content: center;
+}
+.golden-text {
+    font-size: 3em;
+    font-weight: bold;
+    background: linear-gradient(45deg, #FFD700, #FF8C00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    overflow: hidden;
+  }
+  
+  .star {
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: moveStar 3s linear infinite;
+    font-size: 1em;
+    color: #FFD700;
+    text-shadow: 0 0 10px #FFD700;
+  }
+  
+  @keyframes moveStar {
+    0% {
+      left: 0;
+      opacity: 0;
+    }
+    50% {
+      left: 50%;
+      opacity: 1;
+    }
+    100% {
+      left: 100%;
+      opacity: 0;
+    }
+  }

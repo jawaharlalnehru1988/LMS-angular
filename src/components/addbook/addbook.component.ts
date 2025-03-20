@@ -1,9 +1,9 @@
-import { Component, inject, model } from '@angular/core';
+import { Component, inject, model, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { BookDetails, DialogData } from '../../shared/interfaces';
+import { BookDetails } from '../../shared/interfaces';
 import { BookService } from '../../allservices/book.service';
 
 @Component({
@@ -12,9 +12,9 @@ import { BookService } from '../../allservices/book.service';
   templateUrl: './addbook.component.html',
   styleUrl: './addbook.component.scss'
 })
-export class AddbookComponent {
+export class AddbookComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<AddbookComponent>);
-  readonly data = inject<DialogData>(MAT_DIALOG_DATA);
+  readonly data = inject(MAT_DIALOG_DATA);
   readonly animal = model();
 
   constructor(private fb: FormBuilder, private bookService: BookService){

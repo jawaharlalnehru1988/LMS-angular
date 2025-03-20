@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarCComponent } from "../components/navbar-c/navbar-c.component";
 import { Router, NavigationEnd } from '@angular/router';
@@ -10,7 +10,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'LMS-Angular';
   showNavbar = true;
 

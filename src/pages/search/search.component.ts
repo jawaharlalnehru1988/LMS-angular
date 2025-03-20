@@ -1,4 +1,4 @@
-import { Component, inject, model, signal, ViewChild } from '@angular/core';
+import { Component, inject, model, signal, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -23,7 +23,7 @@ import { AddbookComponent } from '../../components/addbook/addbook.component';
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'title',
@@ -50,12 +50,8 @@ export class SearchComponent {
   openDialog(): void {
     const dialogRef = this.dialog.open(AddbookComponent);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe(() => {
       this.fetchBookDetails();
-
-      if (result !== undefined) {
-      }
     });
   }
 

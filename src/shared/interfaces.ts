@@ -15,9 +15,10 @@ export interface Navigations{
     returnDueDate?: string
   }
 
-  export interface DialogData {
-    animal: string;
-    name: string;
+  export interface RegisterUser {
+    username: string
+    password: string
+    email: string
+    phone: string
   }
-
   export type BookDetails = Pick<UserData, "title" | "author" | "isbn">;

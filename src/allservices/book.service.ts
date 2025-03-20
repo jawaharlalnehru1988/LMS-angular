@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BookDetails, UserData } from '../shared/interfaces';
+import { BookDetails, RegisterUser, UserData } from '../shared/interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,5 +16,9 @@ export class BookService {
 
   addNewBook(book: BookDetails): Observable<BookDetails> {
     return this.http.post<BookDetails>('http://localhost:3000/books', book)
+  }
+
+  addNewUser(user:RegisterUser){
+    return this.http.post<RegisterUser>('http://localhost:3000/members', user)
   }
 }
