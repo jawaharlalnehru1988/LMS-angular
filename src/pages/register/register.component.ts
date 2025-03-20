@@ -8,6 +8,7 @@ import { BookService } from '../../allservices/book.service';
 import { RegisterUser, UserWithRole } from '../../shared/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -17,11 +18,12 @@ import { SnackbarComponent } from '../../components/snackbar/snackbar.component'
 })
 export class RegisterComponent implements OnInit {
 
-  isRegister = true;
+  isRegister = false;
 
   authForm!: FormGroup;
+  usersDetails: UserWithRole[]=[];
 
-  constructor(private formBuilder: FormBuilder, private bookService: BookService) {
+  constructor(private formBuilder: FormBuilder, private bookService: BookService, private router: Router) {
     this.authForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
       password: ['', [
@@ -48,13 +50,19 @@ export class RegisterComponent implements OnInit {
     if (!this.isRegister) {
       this.authForm.removeControl('email');
       this.authForm.removeControl('phone');
-      
+      this.bookService.getUserDetails().subscribe({
+        next:(res: UserWithRole[])=>{
+          this.usersDetails = res;
+        },
+        error(err) {
+          console.log(err);
+        },
+      })
     }
   }
 
   switchForm(){
     this.isRegister = !this.isRegister;
-    
   }
 
   submit(){
@@ -70,11 +78,21 @@ export class RegisterComponent implements OnInit {
       });
       
     } else if(this.authForm.valid) {
-      this.bookService.getUserDetails().subscribe({
-        next:(res: UserWithRole)=>{
-          console.log(res);
-        }
-      })
+        this.findUser(this.usersDetails, this.authForm.value);      
+    }
+  }
+
+  findUser(users: UserWithRole[], submitted: Pick<UserWithRole, "username" | "password"> ) {
+    const matchedUser = users.find(user => 
+      user.username === submitted.username && user.password === submitted.password
+    );
+    if (matchedUser) {
+      console.log("User found:", matchedUser);
+      this.router.navigate(["/home"]);
+      this.bookService.userDataSignal.set(matchedUser);
+
+    } else {
+      console.log("No matching user found.");
     }
   }
 

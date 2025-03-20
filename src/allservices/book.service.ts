@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BookDetails, RegisterUser, UserData, UserWithRole } from '../shared/interfaces';
 import { Observable } from 'rxjs';
 
@@ -7,6 +7,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BookService {
+
+   userDataSignal = signal<UserWithRole>({
+     role: 'Librarian',
+     username: '',
+     password: '',
+     email: '',
+     phone: ''
+   });
 
   constructor(private http: HttpClient) { }
 
@@ -23,7 +31,9 @@ export class BookService {
   }
 
   getUserDetails(){
-    return this.http.get<UserWithRole>('http://localhost:3000/members')
+    return this.http.get<UserWithRole[]>('http://localhost:3000/members')
   }
 
 }
+
+
