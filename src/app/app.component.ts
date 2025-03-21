@@ -11,7 +11,6 @@ import { NavbarCComponent } from "../components/navbar-c/navbar-c.component";
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  title = 'LMS-Angular';
   showNavbar = true;
 
   constructor(private router: Router) {}

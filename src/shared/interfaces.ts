@@ -5,7 +5,7 @@ export interface Navigations{
 
 
   export interface UserData {
-    categories: any;
+    categories: string;
     id: string
     title: string
     author: string

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../allservices/book.service';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
@@ -12,12 +12,12 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
  
   allBookItems: UserData[] = [];
   filteredBookItems: UserData[] = [];
-  totalCatagories: number = 0;
-  totalBooks: number = 0;
+  totalCatagories = 0;
+  totalBooks = 0;
   constructor(private bookService:BookService) {}
 
   ngOnInit():void{
@@ -38,7 +38,7 @@ export class HomeComponent {
   }
 
   segragateBooks(books:UserData[]):void{
-    const categoryCounts = books.reduce((acc:{ [key: string]: number }, book:UserData) => {
+    const categoryCounts = books.reduce((acc:Record<string, number>, book:UserData) => {
       if (acc[book.categories]) {
         acc[book.categories] += book.count;
       } else {
@@ -50,7 +50,7 @@ export class HomeComponent {
     console.log(categoryCounts);
     this.analyzeCategoryCounts(categoryCounts);
   }
-  analyzeCategoryCounts(categoryCounts: { [key: string]: number | string }): void {
+  analyzeCategoryCounts(categoryCounts: Record<string, number | string>): void {
     const numberOfKeys: number = Object.keys(categoryCounts).length;
     const totalCount: number = Object.values(categoryCounts).reduce((acc: number, value: number | string) => {
       const numericValue: number = typeof value === 'number' ? value : 0;

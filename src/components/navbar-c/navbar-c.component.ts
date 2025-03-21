@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Navigations, UserWithRole } from '../../shared/interfaces';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -12,14 +12,7 @@ import { BookService } from '../../allservices/book.service';
   templateUrl: './navbar-c.component.html',
   styleUrl: './navbar-c.component.scss'
 })
-export class NavbarCComponent {
-  navTitle:Navigations[] = [
-    {title: "Home", route: "/home"}, 
-    {title: "Books' Dashboard", route: "/search"}, 
-    {title: "Borrow", route: "/borrow"}, 
-    {title: "Return", route: "/return"}, 
-    {title: "History", route: "/history"}
-    ];
+export class NavbarCComponent implements OnInit {
   userData: UserWithRole = {
     "role": "Librarian",
     "username": "",
@@ -27,23 +20,53 @@ export class NavbarCComponent {
     "email": "",
     "phone": ""
 };
-    constructor(private router: Router, private bookService: BookService){}
+  navTitle:Navigations[] = [
+    {title: "Home", route: "/home"}, 
+    { title: "Books' Dashboard", route: "/search" },
+    { title: "Users' Dashboard", route: "/users" },
+    {title: "Borrow", route: "/borrow"}, 
+    {title: "Return", route: "/return"}, 
+    {title: "History", route: "/history"}
+    ];
+    constructor(private router: Router, private bookService: BookService){
+      
+    }
+    
+   
+      
+      ngOnInit():void{
+        this.getUserDetails();
+        this.filterUnautorisedTabs(this.userData.role);
+    }
 
-    ngOnInit():void{
-      this.userData= this.bookService.userDataSignal();
+    getUserDetails():void{
       
       if (!this.userData.username) {
         const userFromSessionString = sessionStorage.getItem("user");
         
-        if (userFromSessionString){
-          const userFromSession = JSON.parse(userFromSessionString);
-          this.userData = userFromSession;
-        }
+        if (userFromSessionString) this.userData  = JSON.parse(userFromSessionString);
+        
+        
       } else {
         console.log("No user data found in session storage.");
       }
     }
+
+
     logOut():void{
       this.router.navigate(["/login"]);
+      sessionStorage.removeItem("user");
     }
+
+    filterUnautorisedTabs(role:string ){
+      if (role === "Member") {
+        this.navTitle = this.navTitle.filter(tab => tab.title !== "Books' Dashboard" && tab.title !== "Users' Dashboard");
+      } else if (role === "Librarian") {
+       
+      this.navTitle = [
+        ...this.navTitle,
+      ];
+
+        }
+      }
 }
