@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
-import { BookDetails, RegisterUser, UserData, UserWithRole } from '../shared/interfaces';
+import { computed, Injectable, signal, WritableSignal } from '@angular/core';
+import { BookData, RegisterUser, UserWithRole } from '../shared/interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,22 +16,38 @@ export class BookService {
      phone: ''
    });
 
+  borrowList:WritableSignal<BookData[]> = signal([]);
+  
+  itemCount = computed(()=> this.borrowList().length);
+  addBookList(newBook: BookData){
+    this.borrowList.update((prevBooks)=> [...prevBooks, newBook]);
+  }
+
+  updateBook(updatedItem: BookData){
+    this.borrowList.update((prevBooks) => 
+      prevBooks.map(book => book.id === updatedItem.id? updatedItem : book));
+  }
+
+  removeBook(id: string){
+    this.borrowList.update((prevBooks) => prevBooks.filter(book => book.id !== id));
+  }
+
   constructor(private http: HttpClient) { }
 
   getAllBooks(){
-    return this.http.get<UserData[]>('http://localhost:3000/books');
+    return this.http.get<BookData[]>('http://localhost:3000/books');
   }
 
-  addNewBook(book: BookDetails): Observable<BookDetails> {
-    return this.http.post<BookDetails>('http://localhost:3000/books', book)
+  addNewBook(book: BookData): Observable<BookData> {
+    return this.http.post<BookData>('http://localhost:3001/bookapi/addbook', book)
   }
 
   addNewUser(user:RegisterUser){
     return this.http.post<RegisterUser>('http://localhost:3000/members', user)
   }
 
-  getUserDetails(){
-    return this.http.get<UserWithRole[]>('http://localhost:3000/members')
+  getUserDetails():Observable<UserWithRole[]>{
+    return this.http.get<UserWithRole[]>('http://localhost:3001/api/fetch-user')
   }
 
 }

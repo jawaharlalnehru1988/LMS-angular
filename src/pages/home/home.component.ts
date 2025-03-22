@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { BookService } from '../../allservices/book.service';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import { NgFor, NgStyle } from '@angular/common';
-import { UserData } from '../../shared/interfaces';
+import { BookData } from '../../shared/interfaces';
 import {MatInputModule} from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 @Component({
@@ -14,8 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class HomeComponent implements OnInit {
  
-  allBookItems: UserData[] = [];
-  filteredBookItems: UserData[] = [];
+  allBookItems: BookData[] = [];
+  filteredBookItems: BookData[] = [];
   totalCatagories = 0;
   totalBooks = 0;
   constructor(private bookService:BookService) {}
@@ -37,8 +37,8 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  segragateBooks(books:UserData[]):void{
-    const categoryCounts = books.reduce((acc:Record<string, number>, book:UserData) => {
+  segragateBooks(books:BookData[]):void{
+    const categoryCounts = books.reduce((acc:Record<string, number>, book:BookData) => {
       if (acc[book.categories]) {
         acc[book.categories] += book.count;
       } else {
@@ -64,4 +64,13 @@ export class HomeComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
     this.filteredBookItems = this.allBookItems.filter(book => book.title.toLowerCase().includes(filterValue));
     } 
+
+    addToBorrowList(item:BookData):void{
+      const itemCount = this.bookService.itemCount; 
+      if (  itemCount() < 3){
+        this.bookService.addBookList(item);
+      } else{
+        alert('You can borrow only 3 books at a time.');
+      }
+    }
   }

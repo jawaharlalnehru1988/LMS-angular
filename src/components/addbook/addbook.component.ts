@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { BookDetails } from '../../shared/interfaces';
+import { BookData } from '../../shared/interfaces';
 import { BookService } from '../../allservices/book.service';
 import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,16 +26,20 @@ export class AddbookComponent implements OnInit {
 
 ngOnInit():void{
   this.bookDetailGroup = this.fb.group({
+    id:["", Validators.required],
     title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+    pages: ["", [Validators.required, Validators.min(1), Validators.max(1000)]],
     author: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
     isbn:['', [Validators.required]],
-    count:[0, Validators.min(0)]
+    image:[''],
+    categories:[''],
+    count:["", Validators.min(0)]
 })
 }
-submitData(newBookData: BookDetails) {
+submitData(newBookData: BookData) {
   console.log(newBookData);
   this.bookService.addNewBook(newBookData).subscribe({
-    next:((res:BookDetails) =>{
+    next:((res:BookData) =>{
     console.log('res :', res);
 
     }),

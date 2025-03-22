@@ -5,7 +5,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BookService } from '../../allservices/book.service';
-import { UserData } from '../../shared/interfaces';
+import { BookData } from '../../shared/interfaces';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { AddbookComponent } from '../../components/addbook/addbook.component';
@@ -31,7 +31,7 @@ export class SearchComponent implements OnInit {
     'isbn',
     'count'
   ];
-  dataSource!: MatTableDataSource<UserData>;
+  dataSource!: MatTableDataSource<BookData>;
   readonly dialog = inject(MatDialog);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -54,7 +54,7 @@ export class SearchComponent implements OnInit {
 
   fetchBookDetails(): void {
     this.bookService.getAllBooks().subscribe({
-      next: (res: UserData[]) => {
+      next: (res: BookData[]) => {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

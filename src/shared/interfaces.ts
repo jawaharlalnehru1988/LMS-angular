@@ -4,14 +4,15 @@ export interface Navigations{
   }
 
 
-  export interface UserData {
-    categories: string;
-    id: string
-    title: string
-    author: string
+  export interface BookData {
+    id: string;
+    title: string;
+    pages: string;
+    author: string;
     isbn: string;
-    count: number;
     image:string;
+    categories: string;
+    count: number;
   }
 
   export interface RegisterUser {
@@ -24,4 +25,3 @@ export interface Navigations{
   export interface UserWithRole extends RegisterUser{
     role: "Librarian" | "Member";
   }
-  export type BookDetails = Pick<UserData, "title" | "author" | "isbn">;

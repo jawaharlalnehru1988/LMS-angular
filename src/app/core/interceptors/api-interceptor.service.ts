@@ -7,7 +7,6 @@ export class ApiInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     console.log('req :', req);
-    console.log('req :', req.body);
 
     const modifiedReq = req.clone({
       setHeaders:{

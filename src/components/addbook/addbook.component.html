@@ -1,52 +1,94 @@
 <h2 mat-dialog-title>Add New Books</h2>
 <mat-dialog-content>
-  <p>Fill new book's Details</p>
-  <form [formGroup]="bookDetailGroup">
-
-      <div>
-          <mat-form-field>
-    <mat-label>Book Title</mat-label>
-    <input matInput formControlName="title" maxlength="50" required />
-    <mat-error *ngIf="bookDetailGroup.get('title')?.errors as errors">
-        <ng-container *ngIf="errors?.['required']">Title is required</ng-container>
-        <ng-container *ngIf="errors?.['minlength']">Title must be at least 3 characters long</ng-container>
-        <ng-container *ngIf="errors?.['maxLength']">Title must be at most 50 characters long</ng-container>
-    </mat-error>
-  </mat-form-field>
-  </div>
-  <div>
-  <mat-form-field>
-    <mat-label>Author</mat-label>
-    <input matInput formControlName="author" required maxlength="50" />
-    <mat-error *ngIf="bookDetailGroup.get('author')?.errors as errors">
-        <ng-container *ngIf="errors?.['required']">Auther Name is required</ng-container>
-        <ng-container *ngIf="errors?.['minlength']">Auther Name must be at least 3 characters long</ng-container>
-        <ng-container *ngIf="errors?.['maxLength']">Auther Name must be at most 50 characters long</ng-container>
-    </mat-error>
-</mat-form-field>
-</div>
-<div>
-    <mat-form-field>
-        <mat-label>ISBN number</mat-label>
-        <input matInput inputmode="numeric" pattern="[0-9]*" formControlName="isbn" maxlength="15" />
-        <mat-error *ngIf="bookDetailGroup.get('isbn')?.errors as errors">
-            <ng-container *ngIf="errors?.['pattern']">Invalid ISBN number format</ng-container>
-              </mat-error>
-    </mat-form-field>
-</div>
-<div>
-    <mat-form-field>
-        <mat-label>No.Of.Copies</mat-label>
-        <input matInput inputmode="numeric" pattern="[0-9]*" maxlength="4" formControlName="count" />
-        <mat-error *ngIf="bookDetailGroup.get('count')?.errors as errors">
-            <ng-container *ngIf="errors?.['pattern']">Invalid number format</ng-container>
-              </mat-error>
-    </mat-form-field>
-</div>
-</form>
+    <p>Fill new book's Details</p>
+    <form [formGroup]="bookDetailGroup">
+        <div>
+            <mat-form-field>
+                <mat-label>Add Id</mat-label>
+                <input matInput inputmode="numeric" pattern="[0-9]*" maxlength="4" formControlName="id" />
+                <mat-error *ngIf="bookDetailGroup.get('id')?.errors as errors">
+                    <ng-container *ngIf="errors?.['pattern']">Invalid number format</ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Book Title</mat-label>
+                <input matInput formControlName="title" maxlength="50" required />
+                <mat-error *ngIf="bookDetailGroup.get('title')?.errors as errors">
+                    <ng-container *ngIf="errors?.['required']">Title is required</ng-container>
+                    <ng-container *ngIf="errors?.['minlength']">Title must be at least 3 characters long</ng-container>
+                    <ng-container *ngIf="errors?.['maxLength']">Title must be at most 50 characters long</ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Pages</mat-label>
+                <input matInput inputmode="numeric" pattern="[0-9]*" maxlength="4" formControlName="pages" />
+                <mat-error *ngIf="bookDetailGroup.get('pages')?.errors as errors">
+                    <ng-container *ngIf="errors?.['pattern']">Invalid number format</ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Author</mat-label>
+                <input matInput formControlName="author" required maxlength="50" />
+                <mat-error *ngIf="bookDetailGroup.get('author')?.errors as errors">
+                    <ng-container *ngIf="errors?.['required']">Auther Name is required</ng-container>
+                    <ng-container *ngIf="errors?.['minlength']">Auther Name must be at least 3 characters
+                        long</ng-container>
+                    <ng-container *ngIf="errors?.['maxLength']">Auther Name must be at most 50 characters
+                        long</ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>ISBN number</mat-label>
+                <input matInput inputmode="numeric" pattern="[0-9]*" formControlName="isbn" maxlength="15" />
+                <mat-error *ngIf="bookDetailGroup.get('isbn')?.errors as errors">
+                    <ng-container *ngIf="errors?.['pattern']">Invalid ISBN number format</ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>image</mat-label>
+                <input matInput type="text" maxlength="40" formControlName="image" />
+                <mat-error *ngIf="bookDetailGroup.get('image')?.errors as errors">
+                    <ng-container *ngIf="errors?.['pattern']">Invalid image URL format</ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Category</mat-label>
+                <input matInput formControlName="categories" required maxlength="50" />
+                <mat-error *ngIf="bookDetailGroup.get('categories')?.errors as errors">
+                    <ng-container *ngIf="errors?.['required']">Category Name is required</ng-container>
+                    <ng-container *ngIf="errors?.['minlength']">Category Name must be at least 3 characters
+                        long</ng-container>
+                    <ng-container *ngIf="errors?.['maxLength']">Category Name must be at most 50 characters
+                        long</ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Count</mat-label>
+                <input matInput inputmode="count" pattern="[0-9]*" formControlName="count" maxlength="15" />
+                <mat-error *ngIf="bookDetailGroup.get('count')?.errors as errors">
+                    <ng-container *ngIf="errors?.['pattern']">Invalid number format</ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </form>
 
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">cancel</button>
-  <button mat-button [mat-dialog-close]="animal()" (click)="submitData(bookDetailGroup.value)" cdkFocusInitial>Submit</button>
+    <button mat-button color="primary" (click)="onNoClick()">cancel</button>
+    <button mat-button [mat-dialog-close]="animal()" (click)="submitData(bookDetailGroup.value)"
+        cdkFocusInitial>Submit</button>
 </mat-dialog-actions>

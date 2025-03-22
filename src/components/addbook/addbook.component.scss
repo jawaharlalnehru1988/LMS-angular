@@ -1,9 +1,7 @@
-@use '@angular/material' as mat;
+mat-dialog-content{
+  width: 40vw;
+}
 
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
-:host {
-  @include mat.button-overrides((
-    filled-container-color: orange,
-    filled-label-text-color: red,
-  ));
+mat-form-field{
+  width: 100%;
 }

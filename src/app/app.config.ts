@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApiInterceptorService } from './core/interceptors/api-interceptor.service';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 export function checkRegistration():()=>Promise<void>{
   const isRegitsted = localStorage.getItem('isRegistered');
   if(!isRegitsted){
@@ -12,5 +13,5 @@ export function checkRegistration():()=>Promise<void>{
 return ()=>Promise.resolve();
 }
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(withInterceptorsFromDi()), {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptorService, multi: true}]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(withInterceptorsFromDi()), {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptorService, multi: true} ]
 };

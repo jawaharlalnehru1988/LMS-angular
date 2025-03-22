@@ -1,15 +1,11 @@
 import { Routes } from '@angular/router';
 import { roleGuard } from '../Guards/role.guard';
+import { RegisterComponent } from '../pages/register/register.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
-    path: 'login',
-    loadComponent: () =>
-      import('../pages/register/register.component').then(
-        (c) => c.RegisterComponent
-      ),
-    
+    path: 'login', component: RegisterComponent
   },
   {
     path: 'home',

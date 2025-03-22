@@ -38,6 +38,24 @@ export class RegisterComponent implements OnInit {
    })
   }
 
+  ngOnInit():void{
+      this.bookService.getUserDetails().subscribe( {
+          next:(res: UserWithRole[])=>{
+            this.usersDetails = res;
+            console.log('this.usersDetails :', this.usersDetails);
+          },
+          error(err) {
+            console.log(err);
+          },
+        });
+      
+  }
+
+  switchForm(){
+    this.isRegister = !this.isRegister;
+  }
+
+  
   private _snackBar = inject(MatSnackBar);
   durationInSeconds = 5;
   openSnackBar() {
@@ -46,28 +64,10 @@ export class RegisterComponent implements OnInit {
 
     });
   }
-  ngOnInit():void{
-    if (!this.isRegister) {
-      this.bookService.getUserDetails().subscribe({
-        next:(res: UserWithRole[])=>{
-          this.usersDetails = res;
-        },
-        error(err) {
-          console.log(err);
-        },
-      })
-    }
-  }
-
-  switchForm(){
-    this.isRegister = !this.isRegister;
-  }
-
   submit(){
     if (this.authForm.valid && this.isRegister) {
       this.bookService.addNewUser(this.authForm.value).subscribe({
         next:(res: RegisterUser)=>{
-          console.log(res);
           this.openSnackBar();
           setTimeout(() => {
             this.isRegister = false;
@@ -81,6 +81,8 @@ export class RegisterComponent implements OnInit {
   }
 
   findUser(users: UserWithRole[], submitted: Pick<UserWithRole, "username" | "password"> ) {
+  console.log('submitted :', submitted);
+  console.log('users :', users);
     const matchedUser = users.find(user => 
       user.username === submitted.username && user.password === submitted.password
     );
