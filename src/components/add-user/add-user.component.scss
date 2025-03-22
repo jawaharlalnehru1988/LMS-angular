@@ -1,0 +1,22 @@
+mat-dialog-content{
+    width: 40vw;
+  }
+  
+  mat-form-field{
+    width: 100%;
+  }
+
+  nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      div:nth-child(2){
+        padding-right: 2em;
+      }
+  }
+
+  .cancel-btn{
+    background-color: #ce0d06;
+    color: white;
+    margin-left: 1rem;
+  }

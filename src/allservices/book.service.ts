@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class BookService {
 
    userDataSignal = signal<UserWithRole>({
+     id: '',
      role: 'Librarian',
      username: '',
      password: '',

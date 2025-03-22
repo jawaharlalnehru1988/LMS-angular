@@ -17,6 +17,7 @@ export class NavbarCComponent implements OnInit {
   hidden = false;
 
   userData: UserWithRole = {
+    id: "",
     role: 'Librarian',
     username: '',
     password: '',

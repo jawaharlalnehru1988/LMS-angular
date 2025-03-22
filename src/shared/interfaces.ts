@@ -16,6 +16,7 @@ export interface Navigations{
   }
 
   export interface RegisterUser {
+    id: string;
     username: string
     password: string
     email: string
@@ -24,4 +25,5 @@ export interface Navigations{
 
   export interface UserWithRole extends RegisterUser{
     role: "Librarian" | "Member";
+
   }

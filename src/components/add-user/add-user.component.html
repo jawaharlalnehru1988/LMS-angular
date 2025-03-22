@@ -1,0 +1,73 @@
+<nav>
+    <div mat-dialog-title>{{isAdd? 'Add':'Edit'}} New User</div>
+    <div>   <mat-icon aria-hidden="false" aria-label="Example home icon"(click)="onNoClick()" fontIcon="close"></mat-icon> 
+      </div>
+</nav>
+<mat-dialog-content>
+    <p> {{isAdd? "Fill New": "Update"}} User's Details</p>
+    <form [formGroup]="userDetailsGroup">
+        <div>
+            <mat-form-field>
+                <mat-label>{{isAdd? "Add": "Update"}} Id</mat-label>
+                <input matInput inputmode="numeric" pattern="[0-9]*" maxlength="4" formControlName="id" />
+                <mat-error *ngIf="userDetailsGroup.get('id')?.errors as errors">
+                    <ng-container *ngIf="errors?.['pattern']">Invalid number format</ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>User Name</mat-label>
+                <input matInput formControlName="username" maxlength="50" required />
+                <mat-error *ngIf="userDetailsGroup.get('username')?.errors as errors">
+                    <ng-container *ngIf="errors?.['required']">UserName is required</ng-container>
+                    <ng-container *ngIf="errors?.['minlength']">UserName must be at least 3 characters long</ng-container>
+                    <ng-container *ngIf="errors?.['maxLength']">UserName must be at most 50 characters long</ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password" required />
+                <mat-error *ngIf="userDetailsGroup.get('password')?.errors as errors">
+                     <ng-container *ngIf="errors?.['required']">Password is required</ng-container>
+                     <ng-container *ngIf="errors?.['minlength']">Password must be at least 8 characters long</ng-container>
+                     <ng-container *ngIf="errors?.['maxlength']">Password must be at most 20 characters long</ng-container>
+                     <ng-container *ngIf="errors?.['pattern']">Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character</ng-container>
+                   </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email"/>
+                <mat-error *ngIf="userDetailsGroup.get('email')?.errors as errors">
+                    <ng-container *ngIf="errors?.['email'] || errors?.['pattern']">Invalid email format</ng-container>
+                  </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Phone Number</mat-label>
+                <input matInput type="number" inputmode="numeric" pattern="[0-9]*" maxlength="10" formControlName="phone"/>
+                <mat-error *ngIf="userDetailsGroup.get('phone')?.errors as errors">
+                <ng-container *ngIf="errors?.['pattern']">Invalid phone number format</ng-container>
+                  </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Role</mat-label>
+                <input matInput formControlName="role" maxlength="50" required />
+                <mat-error *ngIf="userDetailsGroup.get('role')?.errors as errors">
+                    <ng-container *ngIf="errors?.['required']">Role Name is required</ng-container>
+                    <ng-container *ngIf="errors?.['minlength']">Role Name must be at least 3 characters long</ng-container>
+                    <ng-container *ngIf="errors?.['maxLength']">Role Name must be at most 50 characters long</ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    <button mat-raised-button color="primary" type="submit" [disabled]="userDetailsGroup.invalid" (click)="submit()">{{isAdd? 'Save': 'Update'}}</button>
+    <button mat-raised-button class="cancel-btn" [disabled]="userDetailsGroup.invalid" (click)="onNoClick()" >Cancel</button>
+    </form>
+    </mat-dialog-content>

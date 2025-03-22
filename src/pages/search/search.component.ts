@@ -9,6 +9,7 @@ import { BookData } from '../../shared/interfaces';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { AddbookComponent } from '../../components/addbook/addbook.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-search',
@@ -19,6 +20,7 @@ import { AddbookComponent } from '../../components/addbook/addbook.component';
     MatSortModule,
     MatPaginatorModule,
     MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
@@ -29,7 +31,8 @@ export class SearchComponent implements OnInit {
     'title',
     'author',
     'isbn',
-    'count'
+    'count',
+    'action'
   ];
   dataSource!: MatTableDataSource<BookData>;
   readonly dialog = inject(MatDialog);
