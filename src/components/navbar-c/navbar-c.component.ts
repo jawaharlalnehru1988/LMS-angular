@@ -17,6 +17,7 @@ export class NavbarCComponent implements OnInit {
   hidden = false;
 
   userData: UserWithRole = {
+    _id:'',
     id: "",
     role: 'Librarian',
     username: '',
@@ -25,9 +26,9 @@ export class NavbarCComponent implements OnInit {
     phone: '',
   };
   navTitle: Navigations[] = [
-    { title: 'Home', route: '/home' },
-    { title: "Books' Dashboard", route: '/search' },
-    { title: "Users' Dashboard", route: '/users' },
+    { title: 'Books Gallary', route: '/home' },
+    { title: "Books' Ledger", route: '/search' },
+    { title: "Users' List", route: '/users' },
     { title: 'Borrow', route: '/borrow' },
     { title: 'Return', route: '/return' },
     { title: 'History', route: '/history' },

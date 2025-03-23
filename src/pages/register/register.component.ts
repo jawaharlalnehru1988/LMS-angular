@@ -9,6 +9,7 @@ import { RegisterUser, UserWithRole } from '../../shared/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
 import { Router } from '@angular/router';
+import { UserService } from '../../allservices/user.service';
 
 @Component({
   selector: 'app-register',
@@ -23,7 +24,7 @@ export class RegisterComponent implements OnInit {
   authForm!: FormGroup;
   usersDetails: UserWithRole[]=[];
 
-  constructor(private formBuilder: FormBuilder, private bookService: BookService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router, private bookService: BookService) {
     this.authForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
       password: ['', [
@@ -39,7 +40,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit():void{
-      this.bookService.getUserDetails().subscribe( {
+      this.userService.getUserDetails().subscribe( {
           next:(res: UserWithRole[])=>{
             this.usersDetails = res;
             console.log('this.usersDetails :', this.usersDetails);
@@ -66,7 +67,7 @@ export class RegisterComponent implements OnInit {
   }
   submit(){
     if (this.authForm.valid && this.isRegister) {
-      this.bookService.addNewUser(this.authForm.value).subscribe({
+      this.userService.addNewUser(this.authForm.value).subscribe({
         next:(res: RegisterUser)=>{
           this.openSnackBar();
           setTimeout(() => {

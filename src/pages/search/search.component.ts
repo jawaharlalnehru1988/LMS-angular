@@ -1,4 +1,4 @@
-import { Component, inject, model, signal, ViewChild, OnInit } from '@angular/core';
+import { Component, inject, model, signal, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BookService } from '../../allservices/book.service';
 import { BookData } from '../../shared/interfaces';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { AddbookComponent } from '../../components/addbook/addbook.component';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -29,8 +29,10 @@ export class SearchComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'title',
+    'pages',
     'author',
     'isbn',
+    'categories',
     'count',
     'action'
   ];
@@ -47,8 +49,10 @@ export class SearchComponent implements OnInit {
     this.fetchBookDetails();
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(AddbookComponent);
+  openDialog(addOrEdit:string, bookData?:BookData): void {
+    const dialogRef = this.dialog.open(AddbookComponent, {
+      data: {addOrEdit, bookData}
+    });
 
     dialogRef.afterClosed().subscribe(() => {
       this.fetchBookDetails();
@@ -74,5 +78,57 @@ export class SearchComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+openDialogCancel(rowId:string){
+   const dialogRef=  this.dialog.open(DialogCancelDialog, {
+      width: '250px',
+      data:rowId
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      this.fetchBookDetails();
+      
+    });
+  }
+}
+
+
+
+
+@Component({
+  selector: 'dialog-animations-example-dialog',
+  template: `<h2 mat-dialog-title>Delete Book</h2>
+  <mat-dialog-content>
+    Are you sure want to delete the book?
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button class="Cancel-btn" mat-dialog-close>Cancel</button>
+    <button mat-button mat-dialog-close (click)="deleteData(data)" cdkFocusInitial>Yes</button>
+  </mat-dialog-actions>
+  `,
+  styles:`
+  .Cancel-btn{
+    color: red;
+  }
+ 
+  `,
+  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DialogCancelDialog {
+  readonly dialogRef = inject(MatDialogRef<DialogCancelDialog>);
+  readonly data = inject<string>(MAT_DIALOG_DATA);
+  constructor(private bookService: BookService){}
+  deleteData(data:string){
+    this.bookService.deleteBook(data).subscribe({
+      next:(res)=>{
+        alert(`ID with ${res} deleted successfully`);
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    })
   }
 }

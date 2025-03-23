@@ -11,3 +11,10 @@ table {
     width: 25%;
   }
   
+  mat-icon[fontIcon=edit]{
+    color: #4c53af;
+  }
+
+  mat-icon[fontIcon=delete]{
+    color: #ff2112;
+  }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, Injectable, signal, WritableSignal } from '@angular/core';
-import { BookData, RegisterUser, UserWithRole } from '../shared/interfaces';
+import { BookData, UserWithRole } from '../shared/interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class BookService {
 
    userDataSignal = signal<UserWithRole>({
+     _id: '',
      id: '',
      role: 'Librarian',
      username: '',
@@ -36,19 +37,19 @@ export class BookService {
   constructor(private http: HttpClient) { }
 
   getAllBooks(){
-    return this.http.get<BookData[]>('http://localhost:3000/books');
+    return this.http.get<BookData[]>('http://localhost:3001/bookapi/getbooks');
   }
 
   addNewBook(book: BookData): Observable<BookData> {
     return this.http.post<BookData>('http://localhost:3001/bookapi/addbook', book)
   }
 
-  addNewUser(user:RegisterUser){
-    return this.http.post<RegisterUser>('http://localhost:3000/members', user)
+  deleteBook(data:string){
+    return this.http.delete<string>('http://localhost:3001/bookapi/deletebook/'+data);
   }
 
-  getUserDetails():Observable<UserWithRole[]>{
-    return this.http.get<UserWithRole[]>('http://localhost:3001/api/fetch-user')
+  updateBookDetails(id:string, book: BookData){
+    return this.http.put('http://localhost:3001/bookapi/updatebook/'+id, book);
   }
 
 }

@@ -2,8 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
 import { provideHttpClient } from '@angular/common/http';
-import { By } from '@angular/platform-browser';
-import { UserData } from '../../shared/interfaces';
 import { BookService } from '../../allservices/book.service';
 import { of } from 'rxjs';
 

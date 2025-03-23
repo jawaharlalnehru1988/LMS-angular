@@ -5,6 +5,7 @@ export interface Navigations{
 
 
   export interface BookData {
+    _id:string;
     id: string;
     title: string;
     pages: string;
@@ -16,6 +17,7 @@ export interface Navigations{
   }
 
   export interface RegisterUser {
+    _id: string
     id: string;
     username: string
     password: string

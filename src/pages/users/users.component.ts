@@ -1,4 +1,5 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { UserService } from './../../allservices/user.service';
+import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
 import { BookService } from '../../allservices/book.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,7 +8,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UserWithRole } from '../../shared/interfaces';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { AddUserComponent } from '../../components/add-user/add-user.component';
 
@@ -41,7 +42,7 @@ export class UsersComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
  
-  constructor(private bookService: BookService){}
+  constructor(private userService: UserService){}
 
   ngOnInit():void{
     this.fetchUserDetails();
@@ -56,7 +57,7 @@ export class UsersComponent {
   }
 
   fetchUserDetails():void{
-    this.bookService.getUserDetails().subscribe({
+    this.userService.getUserDetails().subscribe({
       next:(res:UserWithRole[])=>{
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
@@ -77,4 +78,56 @@ export class UsersComponent {
     }
   }
 
+  openDialogCancel(deleteId:string): void {
+    const dialogRef=  this.dialog.open(DialogAnimationsExampleDialog, {
+      width: '250px',
+      data:deleteId
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      this.fetchUserDetails();
+      
+    });
+  }
+
+}
+
+
+
+@Component({
+  selector: 'dialog-animations-example-dialog',
+  template: `<h2 mat-dialog-title>Delete User</h2>
+  <mat-dialog-content>
+    Would you like to delete the User?
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button class="Cancel-btn" mat-dialog-close>Cancel</button>
+    <button mat-button mat-dialog-close (click)="deleteData(data)" cdkFocusInitial>Yes</button>
+  </mat-dialog-actions>
+  `,
+  styles:`
+  .Cancel-btn{
+    color: red;
+  }
+ 
+  `,
+  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DialogAnimationsExampleDialog {
+  readonly dialogRef = inject(MatDialogRef<DialogAnimationsExampleDialog>);
+  readonly data = inject<string>(MAT_DIALOG_DATA);
+  constructor(private userService: UserService){}
+  deleteData(data:string){
+    console.log(data);
+    this.userService.deleteUser(data).subscribe({
+      next:(res)=>{
+        alert(`ID with ${res} deleted successfully`);
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    })
+  }
 }

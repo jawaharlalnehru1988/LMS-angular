@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { UserWithRole } from '../../shared/interfaces';
 import { Observable, of, map, catchError } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
+import { UserService } from '../../allservices/user.service';
 
 @Component({
   selector: 'app-add-user',
@@ -22,7 +23,7 @@ export class AddUserComponent {
   readonly data = inject<{addOrEdit:string, dataToEdit?:UserWithRole}>(MAT_DIALOG_DATA);
 
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.userDetailsGroup = this.formBuilder.group({
       id: ['', [Validators.required, Validators.maxLength(4)]],
       username: ['', [Validators.required, Validators.maxLength(40)]],
@@ -56,17 +57,39 @@ export class AddUserComponent {
   }
   submit(){
     if (this.userDetailsGroup.valid) {
-      console.log(this.userDetailsGroup.value);
+      if (this.isAdd) {
+        this.addUser();
+      } else {
+        this.updateUser();
+      }
     }
-
   }
+  
+  addUser(){
+    this.userService.addNewUser(this.userDetailsGroup.value).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.onNoClick();
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    });
+  };
+  
+  updateUser(){
+    if (this.data.dataToEdit?._id) {
+      this.userService.updateUser(this.data.dataToEdit._id, this.userDetailsGroup.value).subscribe({
+        next:(res)=>{
+          console.log('res :', res);
+          this.onNoClick();
+        },
+        error:(err)=>{
+          console.log('err :', err);
+        }
+      })
+    }
+  }
+
 }
 
-export function customAsyncValidator(): AsyncValidatorFn {
-  return (control: AbstractControl): Observable<ValidationErrors | null> => {
-    return of(control.value).pipe(
-      map(value => value === 'invalid' ? { invalidValue: true } : null),
-      catchError(() => of(null))
-    );
-  };
-}

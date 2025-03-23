@@ -16,38 +16,69 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class AddbookComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<AddbookComponent>);
-  readonly data = inject(MAT_DIALOG_DATA);
+  readonly data = inject<{addOrEdit:string, bookData?:BookData}>(MAT_DIALOG_DATA);
   readonly animal = model();
-
-  constructor(private fb: FormBuilder, private bookService: BookService){
-
-  }
   bookDetailGroup!: FormGroup;
 
+  constructor(private fb: FormBuilder, private bookService: BookService){
+    this.bookDetailGroup = this.fb.group({
+      id:["", Validators.required],
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      pages: ["", [Validators.required, Validators.min(1), Validators.max(1000)]],
+      author: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      isbn:['', [Validators.required]],
+      image:[''],
+      categories:[''],
+      count:["", Validators.min(1)]
+  });
+
+  }
+
 ngOnInit():void{
-  this.bookDetailGroup = this.fb.group({
-    id:["", Validators.required],
-    title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-    pages: ["", [Validators.required, Validators.min(1), Validators.max(1000)]],
-    author: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-    isbn:['', [Validators.required]],
-    image:[''],
-    categories:[''],
-    count:["", Validators.min(0)]
-})
+  if (this.data.addOrEdit === "Edit") {
+    this.bookDetailGroup.get("id")?.setValue(this.data.bookData?.id);
+    this.bookDetailGroup.get("title")?.setValue(this.data.bookData?.title);
+    this.bookDetailGroup.get("pages")?.setValue(this.data.bookData?.pages);
+    this.bookDetailGroup.get("author")?.setValue(this.data.bookData?.author);
+    this.bookDetailGroup.get("isbn")?.setValue(this.data.bookData?.isbn);
+    this.bookDetailGroup.get("image")?.setValue(this.data.bookData?.image);
+    this.bookDetailGroup.get("categories")?.setValue(this.data.bookData?.categories);
+    this.bookDetailGroup.get("count")?.setValue(this.data.bookData?.count);
+
+  }
 }
-submitData(newBookData: BookData) {
-  console.log(newBookData);
-  this.bookService.addNewBook(newBookData).subscribe({
+submitData() {
+  if (this.bookDetailGroup.valid) {
+    if (this.data.addOrEdit === 'Edit') {
+      this.updateBookDetails();
+    } else {
+      this.addBooks();
+    }        
+  }
+}
+
+addBooks(){
+  this.bookService.addNewBook(this.bookDetailGroup.value).subscribe({
     next:((res:BookData) =>{
     console.log('res :', res);
-
     }),
     error: (err) => console.error('err :', err),
     complete: () => console.log('complete')
-  })
+  });
 }
 
+updateBookDetails(){
+  if(this.data.bookData){
+    this.bookService.updateBookDetails(this.data.bookData?._id, this.bookDetailGroup.value).subscribe({
+      next:(res)=>{
+        console.log('res :', res);
+      },
+      error:(err)=>{
+        console.error('err :', err);
+      }
+    })
+  }
+}
   onNoClick(): void {
     this.dialogRef.close();
   }
