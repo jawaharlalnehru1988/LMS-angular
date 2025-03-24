@@ -8,12 +8,18 @@ import { environment } from '../../environment';
   providedIn: 'root'
 })
 export class UserService {
-baseURL = environment.apiUrl + "/api/"
+ baseURL = environment.apiUrl + "/userapi/";
   constructor(private http: HttpClient) { }
 
   addNewUser(user:RegisterUser){
     return this.http.post<RegisterUser>(this.baseURL+`members`, user)
   }
+
+  addNewUserAuth(user:RegisterUser){
+    return this.http.post<RegisterUser>(this.baseURL+`register`, user)
+  }
+
+
 
   getUserDetails():Observable<UserWithRole[]>{
     return this.http.get<UserWithRole[]>( this.baseURL+'fetch-user')

@@ -15,8 +15,8 @@
 
   </div>
   <div>
-    <button mat-raised-button [matBadge]="itemCount()" [matBadgeHidden]="hidden" (click)="toggleBadgeVisibility()">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="shopping_cart"></mat-icon>
+    <button mat-raised-button [matBadge]="itemCount()" routerLink="/borrow" [matBadgeHidden]="hidden" >
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="shopping_cart" ></mat-icon>
 Cart
   </button>
     <button mat-raised-button>

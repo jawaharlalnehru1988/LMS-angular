@@ -2,6 +2,19 @@
   <mat-label>Search Book by it's Title, Author and category</mat-label>
   <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Rama" #input>
 </mat-form-field>
+
+<mat-paginator #paginator class="demo-paginator"
+               (page)="handlePageEvent($event)"
+               [length]="totalItems"
+               [pageSize]="pageSize"
+               [disabled]="disabled"
+               [showFirstLastButtons]="showFirstLastButtons"
+               [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+               [hidePageSize]="hidePageSize"
+               [pageIndex]="pageIndex"
+               aria-label="Select page">
+</mat-paginator>
+
   <main class="container">
     <nav class="left-half">
         <div class="button-list">

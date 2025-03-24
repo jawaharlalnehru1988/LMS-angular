@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
 import { Router } from '@angular/router';
 import { UserService } from '../../allservices/user.service';
+import { AuthService } from '../../allservices/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -24,16 +25,16 @@ export class RegisterComponent implements OnInit {
   authForm!: FormGroup;
   usersDetails: UserWithRole[]=[];
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router, private bookService: BookService) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router, private authService: AuthService, ) {
     this.authForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
+      username: ['', [Validators.minLength(3), Validators.maxLength(40)]],
       password: ['', [
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(20),
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$')
       ]],
-      email: ['', [Validators.email, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
+      email: ['', [Validators.email, Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
       ]],
       phone: ['', Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')],
    })
@@ -67,7 +68,7 @@ export class RegisterComponent implements OnInit {
   }
   submit(){
     if (this.authForm.valid && this.isRegister) {
-      this.userService.addNewUser(this.authForm.value).subscribe({
+      this.userService.addNewUserAuth(this.authForm.value).subscribe({
         next:(res: RegisterUser)=>{
           this.openSnackBar();
           setTimeout(() => {
@@ -77,22 +78,27 @@ export class RegisterComponent implements OnInit {
       });
       
     } else if(this.authForm.valid) {
-        this.findUser(this.usersDetails, this.authForm.value);      
+        // this.findUser(this.usersDetails, this.authForm.value);      
+        this.login();
     }
   }
 
-  findUser(users: UserWithRole[], submitted: Pick<UserWithRole, "username" | "password"> ) {
-  console.log('submitted :', submitted);
-  console.log('users :', users);
+  credentials = {email: 'hariharan@gmail.com', password: 'Hariharan@1991'};
+  login(){
+    this.authService.login(this.credentials).subscribe({
+      next:()=> this.router.navigate(['/home']),
+      error:(err)=> console.error(err)
+    })
+  }
+
+  findUser(users: UserWithRole[], submitted: Pick<UserWithRole, "email" | "password"> ) {
+ 
     const matchedUser = users.find(user => 
-      user.username === submitted.username && user.password === submitted.password
+      user.email === submitted.email && user.password === submitted.password
     );
     if (matchedUser) {
-      console.log("User found:", matchedUser);
       this.router.navigate(["/home"]);
       sessionStorage.setItem("user", JSON.stringify(matchedUser));
-      this.bookService.userDataSignal.set(matchedUser);
-
     } else {
       console.log("No matching user found.");
     }

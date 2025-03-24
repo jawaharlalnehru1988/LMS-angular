@@ -3,17 +3,34 @@ import { BookService } from '../../allservices/book.service';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import { NgFor, NgStyle } from '@angular/common';
-import { BookData } from '../../shared/interfaces';
+import { BookData, PaginatedBookData } from '../../shared/interfaces';
 import {MatInputModule} from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import {PageEvent, MatPaginatorModule} from '@angular/material/paginator';
+
+
 @Component({
   selector: 'app-home',
-  imports: [MatCardModule,MatInputModule, MatIconModule, MatButtonModule, NgStyle, NgFor],
+  imports: [MatCardModule,MatInputModule,MatPaginatorModule, MatIconModule, MatButtonModule, NgStyle, NgFor],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
- 
+
+
+  totalItems = 50;
+  pageSize = 4;
+  pageIndex = 0;
+  pageSizeOptions = [4, 8, 16];
+
+  hidePageSize = false;
+  showPageSizeOptions = true;
+  showFirstLastButtons = true;
+  disabled = false;
+
+  pageEvent!: PageEvent;
+
+  
   allBookItems: BookData[] = [];
   filteredBookItems: BookData[] = [];
   totalCatagories = 0;
@@ -21,7 +38,7 @@ export class HomeComponent implements OnInit {
   constructor(private bookService:BookService) {}
 
   ngOnInit():void{
-    this.fetchBooks();
+    this.loadBooks(1, this.pageSize)
   }
 
   fetchBooks():void{
@@ -62,7 +79,12 @@ export class HomeComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
-    this.filteredBookItems = this.allBookItems.filter(book => book.title.toLowerCase().includes(filterValue));
+    this.filteredBookItems = this.allBookItems.filter(book => 
+      book.title.toLowerCase().includes(filterValue) ||
+      book.author.toLowerCase().includes(filterValue) ||
+      book.categories.toLowerCase().includes(filterValue)
+    
+    );
     } 
 
     addToBorrowList(item:BookData):void{
@@ -72,5 +94,20 @@ export class HomeComponent implements OnInit {
       } else{
         alert('You can borrow only 3 books at a time.');
       }
+    }
+
+loadBooks(page:number, limit: number){
+   this.bookService.getPaginatedBooks(page, limit).subscribe({
+        next:(res:PaginatedBookData)=>{
+       this.totalItems = res.totalItems;
+        this.pageSize = res.data.length;
+        this.filteredBookItems = res.data;
+        this.segragateBooks(res.data);
+        }
+      });
+    }
+  
+    handlePageEvent(e: PageEvent) {
+        this.loadBooks(e.pageIndex+1, e.pageSize);
     }
   }

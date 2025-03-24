@@ -29,3 +29,10 @@ export interface Navigations{
     role: "Librarian" | "Member";
 
   }
+
+  export interface PaginatedBookData {
+    data: BookData[]
+    totalItems: number
+    totalPages: number
+    currentPage: number
+  }

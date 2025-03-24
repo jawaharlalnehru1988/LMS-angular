@@ -1,1 +1,21 @@
 <p>borrow works!</p>
+<article class="right-half">
+    <div class="card-container">
+      <mat-card class="example-card" appearance="outlined" *ngFor="let item of borrowBookItems">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image': 'url(' + item.image + ')'}"></div>
+          <mat-card-title>{{ item.title }}</mat-card-title>
+          <!-- <mat-card-subtitle>{{ item.author }}</mat-card-subtitle> -->
+        </mat-card-header>
+        <img mat-card-image [src]="item.image" [alt]="item.title">
+        <mat-card-content>
+          <p> Author: {{ item.author }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>Avl Count: {{ item.count }}</button>
+          <button mat-button [disabled]="item.count <=0" (click)="removeFromBorrowList(item)">remove</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    
+  </article>

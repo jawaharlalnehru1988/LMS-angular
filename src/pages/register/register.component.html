@@ -14,39 +14,40 @@
         <h2>{{isRegister? "Registeration" : "User's log In"}}</h2>
         <div>
             <mat-form-field appearance="outline">
-                <mat-label>Username</mat-label>
-                <input matInput formControlName="username" maxlength="40" required />
-                <mat-error *ngIf="authForm.get('username')?.errors as errors">
-                    <ng-container *ngIf="errors?.['required']">Username is required</ng-container>
-                    <ng-container *ngIf="errors?.['minlength']">Username must be at least 3 characters long</ng-container>
-                    <ng-container *ngIf="errors?.['maxLength']">Username must be at most 20 characters long</ng-container>
-                  </mat-error>
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" />
+                <mat-error *ngIf="authForm.get('email')?.errors as errors">
+                    <ng-container *ngIf="errors?.['email'] || errors?.['pattern']">Invalid email format</ng-container>
+                </mat-error>
             </mat-form-field>
         </div>
-    <div>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="password" required />
-            <mat-error *ngIf="authForm.get('password')?.errors as errors">
-                 <ng-container *ngIf="errors?.['required']">Password is required</ng-container>
-                 <ng-container *ngIf="errors?.['minlength']">Password must be at least 8 characters long</ng-container>
-                 <ng-container *ngIf="errors?.['maxlength']">Password must be at most 20 characters long</ng-container>
-                 <ng-container *ngIf="errors?.['pattern']">Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character</ng-container>
-               </mat-error>
-        </mat-form-field>
-    </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password" required />
+                <mat-error *ngIf="authForm.get('password')?.errors as errors">
+                    <ng-container *ngIf="errors?.['required']">Password is required</ng-container>
+                    <ng-container *ngIf="errors?.['minlength']">Password must be at least 8 characters long</ng-container>
+                    <ng-container *ngIf="errors?.['maxlength']">Password must be at most 20 characters long</ng-container>
+                    <ng-container *ngIf="errors?.['pattern']">Password must contain at least 1 uppercase letter, 1 lowercase
+                        letter, 1 number, and 1 special character</ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
     <ng-container>
         @if(isRegister){
             <div>
                 <mat-form-field appearance="outline">
-                    <mat-label>Email</mat-label>
-                    <input matInput type="email" formControlName="email"/>
-                    <mat-error *ngIf="authForm.get('email')?.errors as errors">
-                        <ng-container *ngIf="errors?.['email'] || errors?.['pattern']">Invalid email format</ng-container>
+                    <mat-label>Username</mat-label>
+                    <input matInput formControlName="username" maxlength="40" required />
+                    <mat-error *ngIf="authForm.get('username')?.errors as errors">
+                        <ng-container *ngIf="errors?.['required']">Username is required</ng-container>
+                        <ng-container *ngIf="errors?.['minlength']">Username must be at least 3 characters long</ng-container>
+                        <ng-container *ngIf="errors?.['maxLength']">Username must be at most 20 characters long</ng-container>
                       </mat-error>
                 </mat-form-field>
             </div>
+           
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Phone Number</mat-label>

@@ -43,9 +43,6 @@ export class NavbarCComponent implements OnInit {
     this.filterUnautorisedTabs(this.userData.role);
   }
   
-  toggleBadgeVisibility() {
-    this.hidden = !this.hidden;
-  }
   getUserDetails(): void {
     if (!this.userData.username) {
       const userFromSessionString = sessionStorage.getItem('user');

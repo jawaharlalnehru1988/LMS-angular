@@ -1,10 +1,23 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Observable, tap } from 'rxjs';
+import { UserService } from './user.service';
+import { HttpClient } from '@angular/common/http';
+
+interface AuthResponse{
+  token: string;
+  username: string;
+  userId:string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+  /**
+   *
+   */
+  constructor(private http: HttpClient, private userService: UserService) { }
+  
   getUserRole(): string {
     const userDetailsString = sessionStorage.getItem('user');
     if (userDetailsString) {
@@ -19,5 +32,13 @@ export class AuthService {
   isLoggedIn():boolean{
     return !!sessionStorage.getItem('user');
   }
-  
+login(credentials:any):Observable<AuthResponse>{
+return this.http.post<AuthResponse>(`${this.userService.baseURL}login`,credentials).pipe(
+  tap((response:AuthResponse) => {
+    localStorage.setItem('token', response.token);
+    localStorage.setItem('username', response.username);
+  })
+);
+}
+
 }
