@@ -78,31 +78,24 @@ export class RegisterComponent implements OnInit {
       });
       
     } else if(this.authForm.valid) {
-        // this.findUser(this.usersDetails, this.authForm.value);      
-        this.login();
+        this.login({email: this.authForm.value.email, password: this.authForm.value.password});
     }
   }
 
-  credentials = {email: 'hariharan@gmail.com', password: 'Hariharan@1991'};
-  login(){
-    this.authService.login(this.credentials).subscribe({
-      next:()=> this.router.navigate(['/home']),
-      error:(err)=> console.error(err)
+  login(obj:{email: string, password: string}){
+    this.authService.login(obj).subscribe({
+      next:(res)=> {
+      console.log('res :', res);
+        this.router.navigate(['/home']);
+        sessionStorage.setItem("user", JSON.stringify(res));
+      },
+      error:(err)=> {
+        console.log("No matching user found.");
+        console.error(err)
+      }
     })
   }
 
-  findUser(users: UserWithRole[], submitted: Pick<UserWithRole, "email" | "password"> ) {
- 
-    const matchedUser = users.find(user => 
-      user.email === submitted.email && user.password === submitted.password
-    );
-    if (matchedUser) {
-      this.router.navigate(["/home"]);
-      sessionStorage.setItem("user", JSON.stringify(matchedUser));
-    } else {
-      console.log("No matching user found.");
-    }
-  }
 
   handleKeydown(event: KeyboardEvent) {
     if (event.key === 'Enter' || event.key === ' ') {
