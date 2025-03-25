@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { UserService } from './user.service';
 import { HttpClient } from '@angular/common/http';
@@ -13,10 +13,13 @@ interface AuthResponse{
   providedIn: 'root'
 })
 export class AuthService {
-  /**
-   *
-   */
-  constructor(private http: HttpClient, private userService: UserService) { }
+
+  authState:WritableSignal<boolean> = signal(false)
+  
+  constructor(private http: HttpClient, private userService: UserService) {
+    console.log('authState :', this.authState());
+
+   }
   
   getUserRole(): string {
     const userDetailsString = sessionStorage.getItem('user');
@@ -32,11 +35,12 @@ export class AuthService {
   isLoggedIn():boolean{
     return !!sessionStorage.getItem('user');
   }
-login(credentials:any):Observable<AuthResponse>{
+login(credentials:{email: string, password: string}):Observable<AuthResponse>{
 return this.http.post<AuthResponse>(`${this.userService.baseURL}login`,credentials).pipe(
   tap((response:AuthResponse) => {
     localStorage.setItem('token', response.token);
     localStorage.setItem('username', response.username);
+    this.authState.set(true);
   })
 );
 }

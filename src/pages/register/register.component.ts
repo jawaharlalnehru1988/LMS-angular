@@ -4,8 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BookService } from '../../allservices/book.service';
-import { RegisterUser, UserWithRole } from '../../shared/interfaces';
+import { UserWithRole } from '../../shared/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
 import { Router } from '@angular/router';
@@ -69,7 +68,7 @@ export class RegisterComponent implements OnInit {
   submit(){
     if (this.authForm.valid && this.isRegister) {
       this.userService.addNewUserAuth(this.authForm.value).subscribe({
-        next:(res: RegisterUser)=>{
+        next:()=>{
           this.openSnackBar();
           setTimeout(() => {
             this.isRegister = false;

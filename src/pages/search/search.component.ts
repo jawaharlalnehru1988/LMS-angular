@@ -81,7 +81,7 @@ export class SearchComponent implements OnInit {
   }
 
 openDialogCancel(rowId:string){
-   const dialogRef=  this.dialog.open(DialogCancelDialog, {
+   const dialogRef=  this.dialog.open(DialogCancelComponent, {
       width: '250px',
       data:rowId
     });
@@ -98,7 +98,7 @@ openDialogCancel(rowId:string){
 
 
 @Component({
-  selector: 'dialog-animations-example-dialog',
+  selector: 'app-dialog-animations-example-dialog',
   template: `<h2 mat-dialog-title>Delete Book</h2>
   <mat-dialog-content>
     Are you sure want to delete the book?
@@ -117,8 +117,8 @@ openDialogCancel(rowId:string){
   imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DialogCancelDialog {
-  readonly dialogRef = inject(MatDialogRef<DialogCancelDialog>);
+export class DialogCancelComponent {
+  readonly dialogRef = inject(MatDialogRef<DialogCancelComponent>);
   readonly data = inject<string>(MAT_DIALOG_DATA);
   constructor(private bookService: BookService){}
   deleteData(data:string){

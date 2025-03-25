@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, Injectable, signal, WritableSignal } from '@angular/core';
-import { BookData, PaginatedBookData, UserWithRole } from '../shared/interfaces';
+import { BookData, PaginatedBookData } from '../shared/interfaces';
 import { Observable } from 'rxjs';
 import { environment } from '../../environment';
 

@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterModule } from '@angular/router';
 import {MatBadgeModule} from '@angular/material/badge';
 import { BookService } from '../../allservices/book.service';
+import { AuthService } from '../../allservices/auth.service';
 
 @Component({
   selector: 'app-navbar-c',
@@ -34,7 +35,7 @@ export class NavbarCComponent implements OnInit {
     { title: 'History', route: '/history' },
   ];
   itemCount: any;
-  constructor(private router: Router, private bookService: BookService) {
+  constructor(private router: Router, private bookService: BookService, private authService:AuthService) {
     this.itemCount = this.bookService.itemCount;
   }
   
@@ -56,6 +57,7 @@ export class NavbarCComponent implements OnInit {
   logOut(): void {
     this.router.navigate(['/login']);
     sessionStorage.removeItem('user');
+    this.authService.authState.set(false);
   }
 
   filterUnautorisedTabs(role: string) {

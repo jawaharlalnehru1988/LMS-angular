@@ -19,8 +19,6 @@ export class UserService {
     return this.http.post<RegisterUser>(this.baseURL+`register`, user)
   }
 
-
-
   getUserDetails():Observable<UserWithRole[]>{
     return this.http.get<UserWithRole[]>( this.baseURL+'fetch-user')
   }
