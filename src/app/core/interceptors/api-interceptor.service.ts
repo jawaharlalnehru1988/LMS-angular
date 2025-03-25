@@ -6,10 +6,12 @@ import { catchError, finalize, Observable, throwError } from 'rxjs';
 export class ApiInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+
+    const token = localStorage.getItem('token');
     const modifiedReq = req.clone({
       setHeaders:{
-        'Content-Type':'application/json'
-      }
+        Authorization : `Bearer ${token}`,
+      },
     });
 
     return next.handle(modifiedReq).pipe(

@@ -1,10 +1,9 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApiInterceptorService } from './core/interceptors/api-interceptor.service';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
+
 export function checkRegistration():()=>Promise<void>{
   const isRegitsted = localStorage.getItem('isRegistered');
   if(!isRegitsted){

@@ -1,12 +1,11 @@
 import { NgIf } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule, FormsModule, FormGroup, FormBuilder, Validators, AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { ReactiveFormsModule, FormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UserWithRole } from '../../shared/interfaces';
-import { Observable, of, map, catchError } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../allservices/user.service';
 
@@ -16,7 +15,7 @@ import { UserService } from '../../allservices/user.service';
   templateUrl: './add-user.component.html',
   styleUrl: './add-user.component.scss'
 })
-export class AddUserComponent {
+export class AddUserComponent implements OnInit {
   isAdd = true;
   userDetailsGroup!: FormGroup;
   readonly dialogRef = inject(MatDialogRef<AddUserComponent>);

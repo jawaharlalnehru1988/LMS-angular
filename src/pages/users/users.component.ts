@@ -1,6 +1,5 @@
 import { UserService } from './../../allservices/user.service';
-import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
-import { BookService } from '../../allservices/book.service';
+import { ChangeDetectionStrategy, Component, inject, ViewChild, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -26,7 +25,7 @@ import { AddUserComponent } from '../../components/add-user/add-user.component';
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'username',
@@ -79,7 +78,7 @@ export class UsersComponent {
   }
 
   openDialogCancel(deleteId:string): void {
-    const dialogRef=  this.dialog.open(DialogAnimationsExampleDialog, {
+    const dialogRef=  this.dialog.open(DialogComponent, {
       width: '250px',
       data:deleteId
     });
@@ -96,7 +95,7 @@ export class UsersComponent {
 
 
 @Component({
-  selector: 'dialog-animations-example-dialog',
+  selector: 'app-dialog-animations-example-dialog',
   template: `<h2 mat-dialog-title>Delete User</h2>
   <mat-dialog-content>
     Would you like to delete the User?
@@ -115,8 +114,8 @@ export class UsersComponent {
   imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DialogAnimationsExampleDialog {
-  readonly dialogRef = inject(MatDialogRef<DialogAnimationsExampleDialog>);
+export class DialogComponent {
+  readonly dialogRef = inject(MatDialogRef<DialogComponent>);
   readonly data = inject<string>(MAT_DIALOG_DATA);
   constructor(private userService: UserService){}
   deleteData(data:string){

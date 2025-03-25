@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../allservices/book.service';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
@@ -64,7 +64,6 @@ export class HomeComponent implements OnInit {
       return acc;
     }, {});
     
-    console.log(categoryCounts);
     this.analyzeCategoryCounts(categoryCounts);
   }
   analyzeCategoryCounts(categoryCounts: Record<string, number | string>): void {
