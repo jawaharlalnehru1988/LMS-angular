@@ -1,5 +1,13 @@
-<p>borrow works!</p>
-<article class="right-half">
+<main>
+  <aside>
+    <div>
+      <h4>Borrowed earlier: {{"1"}}</h4>
+      <h4>Borrow Now: {{borrowBookItems.length}}</h4>
+      
+    </div>
+  </aside>
+  
+  <article class="right-half">
     <div class="card-container">
       <mat-card class="example-card" appearance="outlined" *ngFor="let item of borrowBookItems">
         <mat-card-header>
@@ -16,6 +24,10 @@
           <button mat-button [disabled]="item.count <=0" (click)="removeFromBorrowList(item)">remove</button>
         </mat-card-actions>
       </mat-card>
-    </div>
     
-  </article>
+    </div>
+    @if(borrowBookItems.length === 0) {
+      <div class="empty-cart">Cart is empty</div>
+    }
+  </article>  
+</main>

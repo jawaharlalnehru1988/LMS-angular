@@ -7,7 +7,11 @@ mat-toolbar {
     display: flex;
         justify-content: space-between;
 }
-
+button.active {
+    color: white; /* Change text color */
+    background-color: blue; /* Change background color */
+  }
+  
 
 .button-list {
     display: flex;

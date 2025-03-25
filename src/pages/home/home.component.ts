@@ -102,6 +102,7 @@ loadBooks(page:number, limit: number){
        this.totalItems = res.totalItems;
         this.pageSize = res.data.length;
         this.filteredBookItems = res.data;
+        this.allBookItems = res.data;
         this.segragateBooks(res.data);
         }
       });

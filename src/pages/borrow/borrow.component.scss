@@ -34,3 +34,25 @@ img{
   .example-header-image {
     background-size: cover;
   }
+
+  aside{
+    width: 10rem;
+    border: 2px solid #0056b3;
+    border-radius: 0.25rem;
+  }
+
+  main{
+    height: 90vh;
+    display: flex;
+    gap: 1rem;
+  }
+  .empty-cart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .right-half{
+    width: 80%;
+  }

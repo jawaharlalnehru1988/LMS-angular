@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BookService } from '../../allservices/book.service';
 import { RegisterUser, UserWithRole } from '../../shared/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
@@ -44,19 +43,16 @@ export class RegisterComponent implements OnInit {
       this.userService.getUserDetails().subscribe( {
           next:(res: UserWithRole[])=>{
             this.usersDetails = res;
-            console.log('this.usersDetails :', this.usersDetails);
           },
           error(err) {
             console.log(err);
           },
         });
-      
   }
 
   switchForm(){
     this.isRegister = !this.isRegister;
   }
-
   
   private _snackBar = inject(MatSnackBar);
   durationInSeconds = 5;
@@ -85,12 +81,10 @@ export class RegisterComponent implements OnInit {
   login(obj:{email: string, password: string}){
     this.authService.login(obj).subscribe({
       next:(res)=> {
-      console.log('res :', res);
         this.router.navigate(['/home']);
         sessionStorage.setItem("user", JSON.stringify(res));
       },
       error:(err)=> {
-        console.log("No matching user found.");
         console.error(err)
       }
     })

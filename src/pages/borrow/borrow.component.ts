@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { BookService } from '../../allservices/book.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,10 +15,11 @@ export class BorrowComponent {
 borrowBookItems: BookData[] = [];
 
 constructor( private bookService: BookService) {
-  console.log(this.bookService.borrowList());
-  this.borrowBookItems = this.bookService.borrowList();
-  
+  effect(() => {
+    this.borrowBookItems = this.bookService.borrowList();
+  });
 }
+
 removeFromBorrowList(item:BookData){
   this.bookService.removeBook(item._id);
 }

@@ -6,8 +6,6 @@ import { catchError, finalize, Observable, throwError } from 'rxjs';
 export class ApiInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log('req :', req);
-
     const modifiedReq = req.clone({
       setHeaders:{
         'Content-Type':'application/json'
