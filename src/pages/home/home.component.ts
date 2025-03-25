@@ -64,7 +64,6 @@ export class HomeComponent implements OnInit {
       return acc;
     }, {});
     
-    console.log(categoryCounts);
     this.analyzeCategoryCounts(categoryCounts);
   }
   analyzeCategoryCounts(categoryCounts: Record<string, number | string>): void {
@@ -102,6 +101,7 @@ loadBooks(page:number, limit: number){
        this.totalItems = res.totalItems;
         this.pageSize = res.data.length;
         this.filteredBookItems = res.data;
+        this.allBookItems = res.data;
         this.segragateBooks(res.data);
         }
       });

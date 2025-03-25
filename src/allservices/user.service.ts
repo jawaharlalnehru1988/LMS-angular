@@ -8,27 +8,28 @@ import { environment } from '../../environment';
   providedIn: 'root'
 })
 export class UserService {
- baseURL = environment.apiUrl + "/userapi/";
+ userbaseURL = environment.apiUrl + "/userapi/";
+ authBaseURL = environment.apiUrl + "/authapi/";
   constructor(private http: HttpClient) { }
 
   addNewUser(user:RegisterUser){
-    return this.http.post<RegisterUser>(this.baseURL+`members`, user)
+    return this.http.post<RegisterUser>(this.userbaseURL+`members`, user)
   }
 
   addNewUserAuth(user:RegisterUser){
-    return this.http.post<RegisterUser>(this.baseURL+`register`, user)
+    return this.http.post<RegisterUser>(this.authBaseURL+`register`, user)
   }
 
   getUserDetails():Observable<UserWithRole[]>{
-    return this.http.get<UserWithRole[]>( this.baseURL+'fetch-user')
+    return this.http.get<UserWithRole[]>( this.userbaseURL+'fetch-user')
   }
 
   deleteUser(id: string){
-    return this.http.delete<string>(this.baseURL+`delete/${id}`)
+    return this.http.delete<string>(this.userbaseURL+`delete/${id}`)
   }
 
   updateUser(id:string, reqBody:UserWithRole){
-    return this.http.put<UserWithRole>(this.baseURL+`update/${id}`, reqBody);
+    return this.http.put<UserWithRole>(this.userbaseURL+`update/${id}`, reqBody);
   }
 
 }

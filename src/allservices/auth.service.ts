@@ -17,7 +17,6 @@ export class AuthService {
   authState:WritableSignal<boolean> = signal(false)
   
   constructor(private http: HttpClient, private userService: UserService) {
-    console.log('authState :', this.authState());
 
    }
   
@@ -36,7 +35,7 @@ export class AuthService {
     return !!sessionStorage.getItem('user');
   }
 login(credentials:{email: string, password: string}):Observable<AuthResponse>{
-return this.http.post<AuthResponse>(`${this.userService.baseURL}login`,credentials).pipe(
+return this.http.post<AuthResponse>(`${this.userService.authBaseURL}login`,credentials).pipe(
   tap((response:AuthResponse) => {
     localStorage.setItem('token', response.token);
     localStorage.setItem('username', response.username);

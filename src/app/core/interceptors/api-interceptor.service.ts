@@ -11,7 +11,7 @@ export class ApiInterceptorService implements HttpInterceptor {
     const modifiedReq = req.clone({
       setHeaders:{
         Authorization : `Bearer ${token}`,
-      }
+      },
     });
 
     return next.handle(modifiedReq).pipe(

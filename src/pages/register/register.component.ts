@@ -82,9 +82,9 @@ export class RegisterComponent implements OnInit {
   }
 
   login(obj:{email: string, password: string}){
+  console.log('obj :', obj);
     this.authService.login(obj).subscribe({
       next:(res)=> {
-      console.log('res :', res);
         this.router.navigate(['/home']);
         sessionStorage.setItem("user", JSON.stringify(res));
       },
